@@ -83,6 +83,21 @@ opens a one-time browser sign-in to Notion's hosted MCP server (any free account
 works); the token is cached locally. Paste-text mode needs no setup and exercises
 the full pipeline.
 
+## Inline Notion extension
+
+A Manifest V3 Chrome extension (`notion-extension/`) brings Research Radar into
+Notion itself: highlight text on any `notion.so` page, click the floating 🔍
+icon, and a compact "Related Research" popup renders over the page. It posts the
+highlighted text to the same `/scan` endpoint — no separate UI.
+
+```bash
+python -m uvicorn api:app --port 8000        # backend must be running
+```
+
+Then in Chrome: `chrome://extensions` → enable **Developer mode** → **Load
+unpacked** → select `notion-extension/`. Open a Notion page, highlight a draft,
+and click the icon. (`/scan` is CORS-enabled for this in `api.py`.)
+
 ## Out of scope (future work)
 
 - Live Linear / Slack integrations (Notion is the one live integration).

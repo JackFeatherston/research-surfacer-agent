@@ -1,0 +1,21 @@
+{
+  "manifest_version": 3,
+  "name": "Research Radar for Notion",
+  "version": "0.1.0",
+  "description": "Highlight text in a Notion page to surface relevant past research.",
+  "host_permissions": ["http://localhost:8000/*"],
+  "background": { "service_worker": "background.js" },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.notion.com/*",
+        "*://notion.com/*",
+        "*://*.notion.so/*",
+        "*://notion.so/*",
+        "*://*.notion.site/*"
+      ],
+      "js": ["content.js"],
+      "css": ["styles.css"]
+    }
+  ]
+}
