@@ -1,0 +1,21 @@
+{
+  "id": "s02",
+  "title": "Payment Step Friction and Purchase Completion",
+  "team": "Commerce Insights",
+  "date": "2026-03-05",
+  "url": "https://repo.greatquestion.co/studies/s02",
+  "tags": ["payment friction", "purchase completion", "conversion"],
+  "summary": "Moderated interviews with 14 shoppers who failed to complete a purchase. The payment step was the single biggest point of loss: confusing card-entry fields, unexpected fees appearing late, and no clear sense of progress. Shoppers who were guided through a streamlined payment entry recovered their original intent to buy.",
+  "quotes": [
+    {
+      "text": "I had my card out and ready, but the form kept rejecting my details with no explanation, so I just gave up.",
+      "speaker": "Participant 4, returning shopper",
+      "timestamp_or_section": "Payment entry, 12:40"
+    },
+    {
+      "text": "The extra fee only showed up on the very last screen. That's the moment I closed the tab.",
+      "speaker": "Participant 9, first-time buyer",
+      "timestamp_or_section": "Final review, 18:05"
+    }
+  ]
+}

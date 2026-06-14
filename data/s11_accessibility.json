@@ -1,0 +1,16 @@
+{
+  "id": "s11",
+  "title": "Accessibility of Core Flows",
+  "team": "Inclusive Design",
+  "date": "2025-10-18",
+  "url": "https://repo.greatquestion.co/studies/s11",
+  "tags": ["accessibility", "a11y", "wcag"],
+  "summary": "Evaluated core flows with screen-reader and keyboard-only users. Custom dropdown components were not announced correctly and several actions were unreachable without a mouse, blocking users from completing key tasks independently.",
+  "quotes": [
+    {
+      "text": "The menu just doesn't exist for my screen reader. I have no way to know the options are even there.",
+      "speaker": "Participant D, screen-reader user",
+      "timestamp_or_section": "Keyboard navigation, 04:55"
+    }
+  ]
+}

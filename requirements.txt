@@ -1,0 +1,10 @@
+chromadb
+fastapi
+uvicorn
+ollama
+pydantic
+requests
+streamlit
+mcp
+aiohttp
+starlette<0.48  # keep FastAPI and the MCP client on a shared starlette version

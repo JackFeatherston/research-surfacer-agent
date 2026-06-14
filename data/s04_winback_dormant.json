@@ -1,0 +1,21 @@
+{
+  "id": "s04",
+  "title": "Win-back Campaigns and Dormant Users",
+  "team": "Lifecycle Research",
+  "date": "2026-04-02",
+  "url": "https://repo.greatquestion.co/studies/s04",
+  "tags": ["re-engagement", "dormant users", "win-back"],
+  "summary": "Tested several approaches to reactivating dormant users. Personalized in-app prompts tied to a user's previous activity outperformed generic outbound messaging by a wide margin. Channel mattered less than relevance: dormant users responded to content that referenced what they had already done, regardless of whether it arrived by email or in-app.",
+  "quotes": [
+    {
+      "text": "When it referenced the project I'd actually started, I came back. The generic 'we miss you' notes I ignore.",
+      "speaker": "Participant 3, reactivated user",
+      "timestamp_or_section": "Win-back debrief, 11:10"
+    },
+    {
+      "text": "It wasn't about getting more messages. It was about getting one that was actually about me.",
+      "speaker": "Participant 8, dormant user",
+      "timestamp_or_section": "Channel comparison, 16:40"
+    }
+  ]
+}

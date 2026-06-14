@@ -1,0 +1,16 @@
+{
+  "id": "s06",
+  "title": "Mobile App Performance Perception",
+  "team": "Mobile Research",
+  "date": "2025-09-01",
+  "url": "https://repo.greatquestion.co/studies/s06",
+  "tags": ["mobile", "performance", "latency"],
+  "summary": "Studied how mobile users perceive speed and responsiveness. Perceived slowness, especially during list scrolling and screen transitions, drove frustration more than actual load times. Skeleton loaders and instant feedback meaningfully improved perceived performance.",
+  "quotes": [
+    {
+      "text": "It's not that it's slow exactly, it just feels like nothing happens when I tap, so I tap again.",
+      "speaker": "Participant 10, daily mobile user",
+      "timestamp_or_section": "Scrolling task, 05:30"
+    }
+  ]
+}

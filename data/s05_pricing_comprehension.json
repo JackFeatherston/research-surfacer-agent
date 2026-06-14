@@ -1,0 +1,16 @@
+{
+  "id": "s05",
+  "title": "Pricing Page Comprehension",
+  "team": "Commerce Insights",
+  "date": "2025-11-10",
+  "url": "https://repo.greatquestion.co/studies/s05",
+  "tags": ["pricing", "plan selection", "perceived value"],
+  "summary": "Examined how prospects interpret the pricing page. Plan names were unclear and the differences between tiers were hard to scan, leading prospects to default to the cheapest plan or leave to compare elsewhere.",
+  "quotes": [
+    {
+      "text": "I couldn't tell what I'd actually lose by picking the cheaper plan, so I just picked it.",
+      "speaker": "Participant 1, evaluating prospect",
+      "timestamp_or_section": "Plan selection, 08:50"
+    }
+  ]
+}
