@@ -41,7 +41,10 @@
   font: 13px/1.55 -apple-system, "Segoe UI", sans-serif;
   box-shadow: var(--rr-shadow);
   border: 1px solid var(--rr-border);
+  cursor: grab;
 }
+.rr-popup:active { cursor: grabbing; }
+.rr-popup a, .rr-popup button { cursor: pointer; }
 
 .rr-popup::-webkit-scrollbar { width: 3px; }
 .rr-popup::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 3px; }

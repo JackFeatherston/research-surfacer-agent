@@ -1,9 +1,9 @@
 // Research Radar for Notion — highlight text, click the icon, read related research.
 
 const STANCE_BADGE = {
-  supports: "🟢 Research supports this claim.",
-  contradicts: "🔴 Research contradicts this claim.",
-  neutral: "⚪ Research is neutral and/or adds nuance to this claim.",
+  supports: "🟢 This study supports this claim.",
+  contradicts: "🔴 This study contradicts this claim.",
+  neutral: "⚪ This study is neutral and/or adds nuance to this claim.",
 };
 
 let icon = null;
@@ -82,7 +82,31 @@ function openPopup(rect) {
     <div class="rr-body"><div class="rr-spinner">Scanning past research…</div></div>`;
   popup.querySelector(".rr-close").addEventListener("click", removePopup);
   document.body.appendChild(popup);
+  makeDraggable(popup);
   return popup.querySelector(".rr-body");
+}
+
+// Draggable functionality for insights popup
+function makeDraggable(el) {
+  let startX, startY, startLeft, startTop, dragging = false;
+
+  el.addEventListener("mousedown", (e) => {
+    if (e.target.closest("a, button")) return;
+    dragging = true;
+    startX = e.clientX;
+    startY = e.clientY;
+    startLeft = parseInt(el.style.left, 10);
+    startTop = parseInt(el.style.top, 10);
+    e.preventDefault();
+  });
+
+  document.addEventListener("mousemove", (e) => {
+    if (!dragging) return;
+    el.style.left = `${startLeft + e.clientX - startX}px`;
+    el.style.top = `${startTop + e.clientY - startY}px`;
+  });
+
+  document.addEventListener("mouseup", () => { dragging = false; });
 }
 
 async function scan() {
