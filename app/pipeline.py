@@ -55,7 +55,7 @@ def rerank(draft: str, candidates: list[dict]) -> list[Ranking]:
         for s in candidates
     )
     prompt = (
-        "Score how thematically relevant each past study is to the PM's draft, "
+        "Score how thematically relevant each past study is to this draft that a project manager wrote, "
         "from 1 (unrelated) to 10 (directly relevant).\n"
         "Judge by the underlying user problem, NOT by shared keywords or product area:\n"
         "- A study about 'payment friction' IS highly relevant to a draft about "
@@ -86,7 +86,7 @@ def analyze(draft: str, intent: Intent, study: dict) -> Analysis:
 
 def suggest_study(intent: Intent) -> str:
     prompt = (
-        "No past research matches this phrase. In two sentences, suggest a small, "
+        "No past research relates this phrase. In two sentences, suggest a small, "
         "focused study the team could run to close the gap before committing.\n\n"
         f"TOPICS: {', '.join(intent.topics)}\n"
         f"PROPOSED FEATURE: {intent.proposed_feature}"

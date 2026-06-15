@@ -59,23 +59,6 @@ python -m uvicorn api:app --port 8000 --reload     # backend  (terminal 1)
 python -m streamlit run ui.py             # frontend (terminal 2)
 ```
 
-Open the Streamlit app, load one of the three demo drafts from the sidebar, and
-click **Scan my draft**.
-
-## Demo scenarios
-
-The mock studies use deliberately different terminology from the drafts so
-retrieval + re-ranking are doing real work.
-
-1. **Terminology-mismatch hit** — draft about *checkout drop-off* surfaces the
-   *"Payment Step Friction"* study that keyword search would never find.
-2. **Stale + contradiction** — draft assuming *more email reminders drive
-   re-engagement* surfaces a 27-month-old study showing reminders increase
-   unsubscribes; it is flagged both stale and contradicting.
-3. **Honest gap** — draft about *mobile offline mode* matches no study (the
-   *mobile performance* study is correctly rejected as a different problem), so
-   the agent reports a gap and suggests a study to run.
-
 ## Live Notion input
 
 Switch the input mode to **Notion page** and paste a page URL. The first use

@@ -1,9 +1,9 @@
 // Research Radar for Notion — highlight text, click the icon, read related research.
 
 const STANCE_BADGE = {
-  supports: "🟢 Supports your assumption",
-  contradicts: "🔴 Contradicts your assumption",
-  neutral: "⚪ Neutral / adds nuance",
+  supports: "🟢 Research supports this claim.",
+  contradicts: "🔴 Research contradicts this claim.",
+  neutral: "⚪ Research is neutral and/or adds nuance to this claim.",
 };
 
 let icon = null;
@@ -36,7 +36,7 @@ function showIcon(rect) {
     icon = document.createElement("button");
     icon.className = "rr-icon";
     icon.textContent = "🔍";
-    icon.title = "Scan with Research Radar";
+    icon.title = "Surface res";
     icon.addEventListener("click", scan);
     document.body.appendChild(icon);
   }
@@ -61,8 +61,10 @@ function openPopup(rect) {
   popup.style.top = `${rect.bottom + 8}px`;
   popup.style.left = `${Math.min(rect.left, window.innerWidth - 380)}px`;
   popup.innerHTML = `
-    <button class="rr-close" title="Close">×</button>
-    <div class="rr-header">Surfaced Insights</div>
+    <div class="rr-popup-header">
+      <span class="rr-header">Surfaced Insights</span>
+      <button class="rr-close" title="Close">×</button>
+    </div>
     <div class="rr-body"><div class="rr-spinner">Scanning past research…</div></div>`;
   popup.querySelector(".rr-close").addEventListener("click", removePopup);
   document.body.appendChild(popup);
@@ -81,7 +83,7 @@ async function scan() {
   render(body, result.data);
 }
 
-// If the highlighted text has no relevance. 
+// If the highlighted text has no relevance.
 function render(body, digest) {
   if (digest.gap) {
     body.innerHTML = `
