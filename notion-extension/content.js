@@ -58,8 +58,22 @@ function openPopup(rect) {
   removePopup();
   popup = document.createElement("div");
   popup.className = "rr-popup";
-  popup.style.top = `${rect.bottom + 8}px`;
+
+  const margin = 12;
+  const spaceBelow = window.innerHeight - rect.bottom - margin;
+  const spaceAbove = rect.top - margin;
+  let top, maxHeight;
+  if (spaceBelow >= 180 || spaceBelow >= spaceAbove) {
+    top = rect.bottom + 8;
+    maxHeight = spaceBelow - 8;
+  } else {
+    maxHeight = spaceAbove - 8;
+    top = rect.top - maxHeight - 8;
+  }
+
+  popup.style.top = `${top}px`;
   popup.style.left = `${Math.min(rect.left, window.innerWidth - 380)}px`;
+  popup.style.maxHeight = `${Math.max(maxHeight, 180)}px`;
   popup.innerHTML = `
     <div class="rr-popup-header">
       <span class="rr-header">Surfaced Insights</span>
@@ -83,7 +97,7 @@ async function scan() {
   render(body, result.data);
 }
 
-// If the highlighted text has no relevance.
+// Either state that the highlighted text has no relevance or display the matched results.
 function render(body, digest) {
   if (digest.gap) {
     body.innerHTML = `
