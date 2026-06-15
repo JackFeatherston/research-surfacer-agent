@@ -84,7 +84,7 @@ async def _await_callback() -> tuple[str, str | None]:
     await runner.cleanup()
     return received["code"], received.get("state")
 
-
+# fetch text from notion page
 async def _fetch(page: str) -> str:
     async with streamablehttp_client(NOTION_MCP_URL, auth=_auth()) as (read, write, _):
         async with ClientSession(read, write) as session:

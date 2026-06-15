@@ -6,7 +6,7 @@ import json
 
 import chromadb
 
-from app.config import CHROMA_DIR, COLLECTION, DATA_DIR, RETRIEVE_K
+from app.config import CHROMA_DIR, COLLECTION, DATA_DIR, MAX_CHROMA_DISTANCE, RETRIEVE_K
 from app.embed_client import embed
 
 
@@ -28,7 +28,7 @@ def index() -> int:
     client = _client()
     if any(c.name == COLLECTION for c in client.list_collections()):
         client.delete_collection(COLLECTION)
-    collection = client.create_collection(COLLECTION)
+    collection = client.create_collection(COLLECTION, metadata={"hnsw:space": "cosine"})
 
     ids, documents, embeddings, metadatas = [], [], [], []
     for study in load_studies().values():
@@ -47,9 +47,15 @@ def index() -> int:
 def retrieve(query: str) -> list[str]:
     """Return distinct study ids most semantically similar to the query, ranked."""
     collection = _client().get_collection(COLLECTION)
-    result = collection.query(query_embeddings=[embed(query)], n_results=RETRIEVE_K)
+    result = collection.query(
+        query_embeddings=[embed(query)],
+        n_results=RETRIEVE_K,
+        include=["metadatas", "distances"],
+    )
     ordered = []
-    for meta in result["metadatas"][0]:
+    for meta, dist in zip(result["metadatas"][0], result["distances"][0]):
+        if dist > MAX_CHROMA_DISTANCE:
+            continue
         study_id = meta["study_id"]
         if study_id not in ordered:
             ordered.append(study_id)

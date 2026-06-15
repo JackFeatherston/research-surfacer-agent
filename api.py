@@ -10,7 +10,7 @@ from pydantic import BaseModel
 from app.notion_source import fetch_page
 from app.pipeline import scan
 
-app = FastAPI(title="Research Radar")
+app = FastAPI()
 
 # Allow the Notion Chrome extension's content script to call /scan cross-origin.
 app.add_middleware(
@@ -22,8 +22,8 @@ app.add_middleware(
 
 
 class ScanRequest(BaseModel):
-    text: str | None = None       # pasted draft
     notion_page: str | None = None  # Notion page URL or id to pull live
+    text: str | None = None         # raw text (used by the Chrome extension)
 
 
 @app.post("/scan")

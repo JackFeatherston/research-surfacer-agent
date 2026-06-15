@@ -54,8 +54,6 @@ This creates two failure modes pull-based tools can't fix:
 
 **Mock data (`/data`)**
 - 10–15 JSON files representing past studies: `{id, title, team, date, tags, summary, quotes: [{text, speaker, timestamp_or_section}]}`.
-- Deliberately vary terminology across studies vs. the demo PRD drafts so semantic retrieval + reranking is doing real work.
-- Include: a few clearly relevant studies, one deliberately stale one, one that contradicts a draft's assumption, and at least one topic with *no* matching study (gap case).
 
 **Demo scenarios to hardcode/walk through**
 1. **Terminology mismatch hit** — draft uses different words than the matching study; show retrieval + reranking succeeding where keyword search would fail.

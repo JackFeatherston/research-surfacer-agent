@@ -7,7 +7,7 @@ from typing import Literal
 
 from pydantic import BaseModel
 
-from app.config import RELEVANCE_THRESHOLD, STALE_AFTER_DAYS, TODAY
+from app.config import MIN_DRAFT_WORDS, RELEVANCE_THRESHOLD, STALE_AFTER_DAYS, TODAY
 from app.llm_client import complete
 from app.repository import load_studies, retrieve
 
@@ -109,6 +109,9 @@ def _flags(study: dict, stance: str) -> tuple[list[str], bool, int]:
 
 
 def scan(draft: str) -> dict:
+    if len(draft.split()) < MIN_DRAFT_WORDS:
+        return {"intent": None, "gap": True, "too_short": True, "suggestion": None, "matches": []}
+
     intent = extract_intent(draft)
 
     query = " ".join(intent.topics + [intent.proposed_feature])

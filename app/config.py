@@ -13,9 +13,11 @@ COLLECTION = "studies"
 EMBED_MODEL = "nomic-embed-text"
 LLM_MODEL = "qwen2.5:7b-instruct"
 
-RETRIEVE_K = 8          # wide semantic retrieval before re-ranking
-RELEVANCE_THRESHOLD = 7  # 1-10 re-ranker score required to make the digest
-STALE_AFTER_DAYS = 365   # findings older than 12 months are flagged stale
+RETRIEVE_K = 8              # wide semantic retrieval before re-ranking
+RELEVANCE_THRESHOLD = 7     # 1-10 re-ranker score required to make the digest
+STALE_AFTER_DAYS = 365      # findings older than 12 months are flagged stale
+MIN_DRAFT_WORDS = 8         # fewer words → skip pipeline entirely
+MAX_CHROMA_DISTANCE = 0.5   # cosine distance; drops candidates with similarity < 0.5
 
 TODAY = date.today()
 

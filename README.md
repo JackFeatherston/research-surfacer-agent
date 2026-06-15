@@ -55,7 +55,7 @@ ollama pull nomic-embed-text             # embeddings
 ollama pull qwen2.5:7b-instruct          # reasoning
 
 python ingest.py                          # build the Chroma index from /data
-python -m uvicorn api:app --port 8000     # backend  (terminal 1)
+python -m uvicorn api:app --port 8000 --reload     # backend  (terminal 1)
 python -m streamlit run ui.py             # frontend (terminal 2)
 ```
 
@@ -91,7 +91,7 @@ icon, and a compact "Related Research" popup renders over the page. It posts the
 highlighted text to the same `/scan` endpoint — no separate UI.
 
 ```bash
-python -m uvicorn api:app --port 8000        # backend must be running
+python -m uvicorn api:app --port 8000 --reload        # backend must be running
 ```
 
 Then in Chrome: `chrome://extensions` → enable **Developer mode** → **Load
