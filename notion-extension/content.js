@@ -54,6 +54,7 @@ function removePopup() {
   popup = null;
 }
 
+// Popup body
 function openPopup(rect) {
   removePopup();
   popup = document.createElement("div");
@@ -109,6 +110,7 @@ function makeDraggable(el) {
   document.addEventListener("mouseup", () => { dragging = false; });
 }
 
+// trigger for pipeline
 async function scan() {
   const body = openPopup(selectedRect);
   removeIcon();
@@ -133,6 +135,7 @@ function render(body, digest) {
   body.innerHTML = digest.matches.map(cardHtml).join("");
 }
 
+// Surfaced source with title, quote, and LLM decision  
 function cardHtml(m) {
   const flags = m.flags.map((f) => `<div class="rr-flag">⚠️ ${escapeHtml(f)}</div>`).join("");
   return `
@@ -146,6 +149,7 @@ function cardHtml(m) {
     </div>`;
 }
 
+// helper function
 function escapeHtml(text) {
   const div = document.createElement("div");
   div.textContent = text;
