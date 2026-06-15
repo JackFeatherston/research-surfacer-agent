@@ -86,7 +86,7 @@ def analyze(draft: str, intent: Intent, study: dict) -> Analysis:
 
 def suggest_study(intent: Intent) -> str:
     prompt = (
-        "No past research matches this draft. In two sentences, suggest a small, "
+        "No past research matches this phrase. In two sentences, suggest a small, "
         "focused study the team could run to close the gap before committing.\n\n"
         f"TOPICS: {', '.join(intent.topics)}\n"
         f"PROPOSED FEATURE: {intent.proposed_feature}"
@@ -110,7 +110,7 @@ def _flags(study: dict, stance: str) -> tuple[list[str], bool, int]:
 
 def scan(draft: str) -> dict:
     if len(draft.split()) < MIN_DRAFT_WORDS:
-        return {"intent": None, "gap": True, "too_short": True, "suggestion": None, "matches": []}
+        return {"intent": None, "gap": True, "too_short": True, "suggestion": "Try selecting a longer phrase!", "matches": []}
 
     intent = extract_intent(draft)
 

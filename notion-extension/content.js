@@ -1,7 +1,5 @@
 // Research Radar for Notion — highlight text, click the icon, read related research.
 
-console.log("Research Radar: content script loaded on", location.href);
-
 const STANCE_BADGE = {
   supports: "🟢 Supports your assumption",
   contradicts: "🔴 Contradicts your assumption",
@@ -11,6 +9,7 @@ const STANCE_BADGE = {
 let icon = null;
 let popup = null;
 let selectedText = "";
+let selectedRect = null;
 
 // Show or move the floating icon whenever the user finishes a selection.
 document.addEventListener("mouseup", (event) => {
@@ -27,10 +26,11 @@ document.addEventListener("mouseup", (event) => {
   }
 
   selectedText = text;
-  const rect = selection.getRangeAt(0).getBoundingClientRect();
-  showIcon(rect);
+  selectedRect = selection.getRangeAt(0).getBoundingClientRect();
+  showIcon(selectedRect);
 });
 
+// research icon button
 function showIcon(rect) {
   if (!icon) {
     icon = document.createElement("button");
@@ -62,7 +62,7 @@ function openPopup(rect) {
   popup.style.left = `${Math.min(rect.left, window.innerWidth - 380)}px`;
   popup.innerHTML = `
     <button class="rr-close" title="Close">×</button>
-    <div class="rr-header">Research Radar</div>
+    <div class="rr-header">Surfaced Insights</div>
     <div class="rr-body"><div class="rr-spinner">Scanning past research…</div></div>`;
   popup.querySelector(".rr-close").addEventListener("click", removePopup);
   document.body.appendChild(popup);
@@ -70,8 +70,7 @@ function openPopup(rect) {
 }
 
 async function scan() {
-  const rect = window.getSelection().getRangeAt(0).getBoundingClientRect();
-  const body = openPopup(rect);
+  const body = openPopup(selectedRect);
   removeIcon();
 
   const result = await chrome.runtime.sendMessage({ text: selectedText });
@@ -82,10 +81,11 @@ async function scan() {
   render(body, result.data);
 }
 
+// If the highlighted text has no relevance. 
 function render(body, digest) {
   if (digest.gap) {
     body.innerHTML = `
-      <div class="rr-gap-title">🕳️ Research gap</div>
+      <div class="rr-gap-title">Not enough information.</div>
       <div class="rr-gap-text">${escapeHtml(digest.suggestion)}</div>`;
     return;
   }
