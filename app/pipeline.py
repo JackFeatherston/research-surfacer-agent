@@ -49,6 +49,8 @@ def extract_intent(draft: str) -> Intent:
     return complete(prompt, Intent)
 
 
+# Second pass evaluation after semantic search to get top K studies is ran. This evaluation is focused on 
+# determining which sources actually relate to the problem itself rather than words that fit the problem.
 def rerank(draft: str, candidates: list[dict]) -> list[Ranking]:
     listing = "\n".join(
         f"- {s['id']}: \"{s['title']}\" | tags: {', '.join(s['tags'])} | {s['summary']}"
@@ -57,21 +59,22 @@ def rerank(draft: str, candidates: list[dict]) -> list[Ranking]:
     prompt = (
         "Score how thematically relevant each past study is to this draft that a project manager wrote, "
         "from 1 (unrelated) to 10 (directly relevant).\n"
-        "Judge by the underlying user problem, NOT by shared keywords or product area:\n"
-        "- A study about 'payment friction' IS highly relevant to a draft about "
-        "'checkout drop-off' even though the words differ — same problem.\n"
-        "- A study that merely shares a platform, feature, or domain but investigates a "
+        "Judge by the underlying user problem, NOT by shared keywords or product area. For example:\n"
+        "A study about 'payment friction' IS highly relevant to a draft about "
+        "'checkout drop-off' even though the words differ because it is same problem.\n"
+        "But: A study that merely shares a platform, feature, or domain but investigates a "
         "DIFFERENT problem (e.g. mobile performance vs. mobile offline mode) is NOT "
-        "relevant — score it 4 or below.\n\n"
-        f"DRAFT:\n{draft}\n\nCANDIDATE STUDIES:\n{listing}"
+        "relevant so it would score similar to a 4 or below.\n\n"
+        f"DRAFT:\n{draft}\n\nPAST STUDIES:\n{listing}"
     )
     return complete(prompt, Rankings).rankings
 
 
+# looks through the relevant studies and determines which ones support, contradict, or are neutral to the PM's draft
 def analyze(draft: str, intent: Intent, study: dict) -> Analysis:
     quotes = "\n".join(f"[{i}] {q['text']}" for i, q in enumerate(study["quotes"]))
     prompt = (
-        "Compare one past study against the PM's draft.\n"
+        "Compare one past study against this project manager's draft.\n"
         "1. Write a one or two sentence summary of why the study is relevant.\n"
         "2. Decide whether the study's findings SUPPORT, CONTRADICT, or are NEUTRAL "
         "toward the draft's assumptions, and note why in one sentence.\n"
@@ -84,6 +87,7 @@ def analyze(draft: str, intent: Intent, study: dict) -> Analysis:
     return complete(prompt, Analysis)
 
 
+# If no study is relevant enough, the model will think about the project mananger's goal and suggest a study to conduct research 
 def suggest_study(intent: Intent) -> str:
     prompt = (
         "No past research relates this phrase. In two sentences, suggest a small, "
