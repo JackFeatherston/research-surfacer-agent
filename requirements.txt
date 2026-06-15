@@ -8,3 +8,8 @@ streamlit
 mcp
 aiohttp
 starlette<0.48  # keep FastAPI and the MCP client on a shared starlette version
+
+# Eval harness
+pytest
+openevals          # LLM-as-judge, runs locally against Ollama
+langchain-ollama   # ChatOllama judge model

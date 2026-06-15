@@ -1,0 +1,5 @@
+[tool.pytest.ini_options]
+testpaths = ["evals"]
+markers = [
+    "judge: LLM-as-judge quality check (slower; needs the Ollama judge model)",
+]
