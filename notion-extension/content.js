@@ -140,6 +140,7 @@ function cardHtml(m) {
       <a class="rr-title" href="${m.url}" target="_blank" rel="noopener">${escapeHtml(m.title)}</a>
       <div class="rr-meta">${escapeHtml(m.team)} · ${m.date} · relevance ${m.relevance}/10</div>
       <div class="rr-summary">${escapeHtml(m.relevance_summary)}</div>
+      ${m.quote ? `<blockquote class="rr-quote">${escapeHtml(m.quote.text)}</blockquote>` : ""}
       <div class="rr-stance rr-${m.stance}">${STANCE_BADGE[m.stance]} — ${escapeHtml(m.stance_note)}</div>
       ${flags}
     </div>`;

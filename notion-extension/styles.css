@@ -126,6 +126,16 @@
   line-height: 1.55;
 }
 
+.rr-quote {
+  margin: 0 0 8px;
+  padding: 6px 10px;
+  border-left: 3px solid #d0d0d0;
+  color: var(--rr-muted);
+  font-style: italic;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
 .rr-stance {
   display: inline-block;
   padding: 4px 9px;
