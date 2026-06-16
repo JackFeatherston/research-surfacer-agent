@@ -80,7 +80,10 @@ function openPopup(rect) {
   popup.style.maxHeight = `${Math.max(maxHeight, 180)}px`;
   popup.innerHTML = `
     <div class="rr-popup-header">
-      <span class="rr-header">Surfaced Insights</span>
+      <div class="rr-header-title">
+        <img class="rr-header-logo" src="${chrome.runtime.getURL("GC.png")}" alt="GC" />
+        <span class="rr-header">Surfaced Insights</span>
+      </div>
       <button class="rr-close" title="Close">×</button>
     </div>
     <div class="rr-body"><div class="rr-spinner">Scanning past research…</div></div>`;
