@@ -1,5 +1,5 @@
 """Golden eval cases for the Research Radar pipeline. Each case is a draft plus
-the behavior we expect from scan(), grounded in the real studies under /data.
+the behavior we expect from scan(), grounded in the real studies in Supabase.
 Pure data — no logic — so the pytest suite can parametrize over it."""
 
 from dataclasses import dataclass, field

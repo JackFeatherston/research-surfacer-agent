@@ -33,11 +33,11 @@ hosted model (Claude, OpenAI) is a one-line config swap.
 
 Embeddings: `nomic-embed-text` via Ollama (`app/embed_client.py`)
 Reasoning:  `qwen2.5:7b-instruct` set to JSON mode via Ollama (`app/llm_client.py`)
-Vector store: Chroma  (`app/repository.py`)
+Synthetic research repository: Supabase (Postgres) (`app/supabase_client.py`)
+Vector store: Chroma, rebuilt from Supabase (`app/repository.py`)
 Live input: Notion's hosted MCP server (`app/notion_source.py`)
 Backend: FastAPI with its `/scan` endpoint (`api.py`)
 Frontend: Streamlit (`ui.py`)
-Synthetic data repository: 12 studies in `data/`
 
 
 ## Running the Application
@@ -47,10 +47,13 @@ pip install -r requirements.txt          # Python dependencies
 ollama pull nomic-embed-text             # embedding model
 ollama pull qwen2.5:7b-instruct          # reasoning model
 
-python ingest.py                                   # build the Chroma index from /data (only need to do once)
+python ingest.py                                   # build the Chroma index from Supabase (only need to do once)
 python -m uvicorn api:app --port 8000 --reload     # backend  (terminal 1)
 python -m streamlit run ui.py                      # frontend (terminal 2)
 ```
+
+Make sure to create a .env folder with the environment variables: SUPABASE_URL and
+SUPABASE_KEY. 
 
 With the backend running, load the extension in Chrome: `chrome://extensions` --> enable
 Developer mode --> Load unpacked --> select `notion-extension/`. (`/scan` is

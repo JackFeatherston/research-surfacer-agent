@@ -1,21 +1,27 @@
-"""Mock research repository backed by a local Chroma collection. Each study's
-summary and every individual quote are embedded so semantic retrieval can match
-on either, regardless of the terminology used in the draft."""
-
-import json
+"""Research repository. Studies and quotes live in Supabase; each study's summary
+and every individual quote are embedded into a local Chroma collection so semantic
+retrieval can match on either, regardless of the terminology used in the draft."""
 
 import chromadb
 
-from app.config import CHROMA_DIR, COLLECTION, DATA_DIR, MAX_CHROMA_DISTANCE, RETRIEVE_K
+from app.config import CHROMA_DIR, COLLECTION, MAX_CHROMA_DISTANCE, RETRIEVE_K
 from app.embed_client import embed
+from app.supabase_client import supabase
 
 
 def load_studies() -> dict[str, dict]:
-    """Read every study JSON file, keyed by study id."""
+    """Read every study from Supabase, keyed by study id, with quotes in order."""
+    rows = supabase.table("studies").select(
+        "id, title, team, date, url, tags, summary, "
+        "quotes(text, speaker, timestamp_or_section, ordinal)"
+    ).execute().data
     studies = {}
-    for path in sorted(DATA_DIR.glob("*.json")):
-        study = json.loads(path.read_text(encoding="utf-8"))
-        studies[study["id"]] = study
+    for row in rows:
+        quotes = sorted(row.pop("quotes"), key=lambda q: q["ordinal"])
+        row["quotes"] = [
+            {k: q[k] for k in ("text", "speaker", "timestamp_or_section")} for q in quotes
+        ]
+        studies[row["id"]] = row
     return studies
 
 

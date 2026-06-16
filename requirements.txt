@@ -1,4 +1,6 @@
 chromadb
+supabase
+python-dotenv
 fastapi
 uvicorn
 ollama

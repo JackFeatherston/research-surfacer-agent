@@ -1,4 +1,4 @@
-"""Build the Chroma index from the study files in /data. Run once before serving:
+"""Build the Chroma index from the studies in Supabase. Run once before serving:
     python ingest.py
 """
 
