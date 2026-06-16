@@ -17,5 +17,11 @@
       "js": ["content.js"],
       "css": ["styles.css"]
     }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["GC.png"],
+      "matches": ["*://*.notion.com/*", "*://*.notion.so/*", "*://*.notion.site/*"]
+    }
   ]
 }

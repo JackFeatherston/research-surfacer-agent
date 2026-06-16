@@ -35,8 +35,11 @@ function showIcon(rect) {
   if (!icon) {
     icon = document.createElement("button");
     icon.className = "rr-icon";
-    icon.textContent = "🔍";
     icon.title = "Surface res";
+    const logo = document.createElement("img");
+    logo.className = "rr-icon-img";
+    logo.src = chrome.runtime.getURL("GC.png");
+    icon.appendChild(logo);
     icon.addEventListener("click", scan);
     document.body.appendChild(icon);
   }

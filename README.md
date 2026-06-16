@@ -3,11 +3,11 @@
 Project Managers can use Great Question's product for research-driven feature proposals which not only makes development blazing fast, but also smarter by utilizing customer insights to drive the direction of where a new feature is headed. 
 
 However, there are two pain points that I noticed which Project Managers might run into while using Great Question's product:
-1) They're a first time user of Great Question, and they've already written their feature proposal. What's the best productive way to use the product if they already have a proposal they wrote?
+1. They're a first time user of Great Question, and they've already written their feature proposal. What's the best productive way to use the product if they already have a proposal they wrote?
 
-2) When querying a research repository, you won't get meaningful results if its an exact keyword search. Hence, semantic search is almost a necessity to have.  
+2. When querying a research repository, you won't get meaningful results if its an exact keyword search. Hence, semantic search is almost a necessity to have.  
 
-3) They already have enough applications open at a time. They're probably writing on Notion, Slack, etc. and having to flip across one more tab introduces one more bit of unwanted friction that they might not want to deal with.
+3. They already have enough applications open at a time. They're probably writing on Notion, Slack, etc. and having to flip across one more tab introduces one more bit of unwanted friction that they might not want to deal with.
 
 
 The solution: an integrated tool that Project Manager's can use directly from their Notion page. PM's can simply highlight text from their already written proposal draft, hit the search button overlay, and with semantic search, the tool will query a research repository full of JSON-labeled user interviews and surface the most relevant studies in order to show support, contradiction, or a neutral stance for the feature that the PM has written out. 
@@ -70,17 +70,15 @@ It has two layers:
 ```bash
 ollama pull llama3.1:8b          # judge model (one-time)
 
-pytest evals -m "not judge"      # comparing expected assertions vs dynamic outcomes produced by LLM 
-pytest evals                     # full suite including LLM-as-judge
+python -m pytest evals -m "not judge"      # comparing expected assertions vs dynamic outcomes produced by LLM 
+python -m pytest evals                     # full suite including LLM-as-judge
 ```
+
 
 ## Future work & optimizations
 
-- **Live Linear / Slack integrations** — Notion is currently the one live source.
-- **Real repository data** — the 12 studies in `data/` are mocked.
-- **Expose Research Radar itself as an MCP server** so Claude / Cursor could call it
-  directly, slotting into an existing MCP surface.
-- **Larger reasoning model** — `qwen2.5:14b` gives noticeably better nuance on the
-  re-ranking and contradiction steps where hardware allows.
-- **Embedding + quote-level indexing** — index individual quotes, not just study
-  summaries, to sharpen retrieval and citation precision.
+1. Use a better reasoning/embedding model (cloud based API with OpenAI/Claude).
+2. Migrate to a real research repository.
+3. Expand integration to Slack and other platforms used by PM's.
+4. Allow multi-threading to cut back on analysis time for each source.
+5. Stream analysis progress for users to see.
