@@ -56,6 +56,8 @@ Frontend: Streamlit (`ui.py`)
 
 ## Running the Application
 
+NOTE: [Ollama](https://ollama.com/) is required to be installed to run this demo on your machine. 
+
 ```bash
 pip install -r requirements.txt          # Python dependencies
 ollama pull nomic-embed-text             # embedding model
