@@ -26,8 +26,22 @@ hosted model (Claude, OpenAI) is a one-line config swap.
 
 4. The LLM determines whether the source supports, contradicts, or is neutral towards the highlighted text. A flag is thrown if the source it outdated.
 
-5. The final result is shown: relevant and reordered sources, direct quotes and citations, and a short statement on the LLM's decision. If no studies are relevant enough, the LLM will suggest a brief study for the PM to conduct to gather useful information before proceeding.    
+5. The final result is shown: relevant and reordered sources, direct quotes and citations, and a short statement on the LLM's decision. If no studies are relevant enough, the LLM will suggest a brief study for the PM to conduct to gather useful information before proceeding.
 
+ 6. This is discussed later, but the LLM model is evaluated by an agent harness that tests output quality against an LLM-as-a-judge as well as expected outcomes in order to ensure output is acceptable for production.
+
+
+## What it Looks Like
+
+<img width="876" height="502" alt="Image" src="https://github.com/user-attachments/assets/5f8350ed-7081-49da-8d77-6f2bf668e892" />
+
+<img width="1212" height="582" alt="Image" src="https://github.com/user-attachments/assets/1b025107-eee5-4033-91a1-9cf3afe85381" />
+
+<img width="1222" height="425" alt="Image" src="https://github.com/user-attachments/assets/c491c55e-48d0-4690-ad93-02d1d97c63a8" />
+
+<img width="1221" height="416" alt="Image" src="https://github.com/user-attachments/assets/316b4ae0-01ec-4065-a156-16bde2175593" />
+
+<img width="740" height="387" alt="Image" src="https://github.com/user-attachments/assets/3e76b461-eb20-472b-a7f0-12ed0eac0baf" />
 
 ## Architecture
 
