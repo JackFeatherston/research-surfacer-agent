@@ -17,9 +17,10 @@ def load_studies() -> dict[str, dict]:
     ).execute().data
     studies = {}
     for row in rows:
-        quotes = sorted(row.pop("quotes"), key=lambda q: q["ordinal"])
+        quotes = sorted(row.pop("quotes"), key=lambda quote: quote["ordinal"])
         row["quotes"] = [
-            {k: q[k] for k in ("text", "speaker", "timestamp_or_section")} for q in quotes
+            {field: quote[field] for field in ("text", "speaker", "timestamp_or_section")}
+            for quote in quotes
         ]
         studies[row["id"]] = row
     return studies
@@ -28,7 +29,7 @@ def load_studies() -> dict[str, dict]:
 def _client():
     return chromadb.PersistentClient(path=str(CHROMA_DIR))
 
-
+# Called by ingest.py to extract all vector embeddings from supabase.
 def index() -> int:
     """Rebuild the vector index from the study files. Returns the document count."""
     client = _client()
@@ -38,9 +39,9 @@ def index() -> int:
 
     ids, documents, embeddings, metadatas = [], [], [], []
     for study in load_studies().values():
-        pieces = [("summary", study["summary"])]
-        pieces += [(f"q{i}", q["text"]) for i, q in enumerate(study["quotes"])]
-        for kind, text in pieces:
+        texts = [("summary", study["summary"])]
+        texts += [(f"q{ordinal}", quote["text"]) for ordinal, quote in enumerate(study["quotes"])]
+        for kind, text in texts:
             ids.append(f"{study['id']}::{kind}")
             documents.append(text)
             embeddings.append(embed(text))
@@ -51,7 +52,7 @@ def index() -> int:
 
 
 def retrieve(query: str) -> list[str]:
-    """Return distinct study ids most semantically similar to the query, ranked."""
+    """Return distinct study ids most semantically similar to the query."""
     collection = _client().get_collection(COLLECTION)
     result = collection.query(
         query_embeddings=[embed(query)],

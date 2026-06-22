@@ -1,4 +1,4 @@
-// Research Radar for Notion — highlight text, click the icon, read related research.
+// Extension graphics overlay and functionality in Notion
 
 const STANCE_BADGE = {
   supports: "🟢 This study supports this claim.",
@@ -116,7 +116,7 @@ function makeDraggable(el) {
   document.addEventListener("mouseup", () => { dragging = false; });
 }
 
-// trigger for pipeline
+// sends highlighted text over to background.js then gets the response and sends it to render
 async function scan() {
   const body = openPopup(selectedRect);
   removeIcon();

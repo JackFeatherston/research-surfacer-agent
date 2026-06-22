@@ -28,7 +28,7 @@ hosted model (Claude, OpenAI) is a one-line config swap.
 
 5. The final result is shown: relevant and reordered sources, direct quotes and citations, and a short statement on the LLM's decision. If no studies are relevant enough, the LLM will suggest a brief study for the PM to conduct to gather useful information before proceeding.
 
- 6. This is discussed later, but the LLM model is evaluated by an agent harness that tests output quality against an LLM-as-a-judge as well as expected outcomes in order to ensure output is acceptable for production.
+6. This is discussed later, but the LLM model is evaluated by an agent harness that tests output quality against an LLM-as-a-judge as well as expected outcomes in order to ensure output is acceptable for production.
 
 
 ## What it Looks Like
@@ -49,9 +49,8 @@ Embeddings: `nomic-embed-text` via Ollama (`app/embed_client.py`)
 Reasoning:  `qwen2.5:7b-instruct` set to JSON mode via Ollama (`app/llm_client.py`)
 Synthetic research repository: Supabase (Postgres) (`app/supabase_client.py`)
 Vector store: Chroma, rebuilt from Supabase (`app/repository.py`)
-Live input: Notion's hosted MCP server (`app/notion_source.py`)
 Backend: FastAPI with its `/scan` endpoint (`api.py`)
-Frontend: Streamlit (`ui.py`)
+Frontend: Javascript Chrome extension
 
 
 ## Running the Application
@@ -64,12 +63,11 @@ ollama pull nomic-embed-text             # embedding model
 ollama pull qwen2.5:7b-instruct          # reasoning model
 
 python ingest.py                                   # build the Chroma index from Supabase (only need to do once)
-python -m uvicorn api:app --port 8000 --reload     # backend  (terminal 1)
-python -m streamlit run ui.py                      # frontend (terminal 2)
+python -m uvicorn api:app --port 8000 --reload     # backend
 ```
 
 Make sure to create a .env folder with the environment variables: SUPABASE_URL and
-SUPABASE_KEY. 
+SUPABASE_KEY. Ask me for a copy of the actual keys.
 
 With the backend running, load the extension in Chrome: `chrome://extensions` --> enable
 Developer mode --> Load unpacked --> select `notion-extension/`. (`/scan` is

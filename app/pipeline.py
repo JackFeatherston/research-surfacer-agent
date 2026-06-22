@@ -70,7 +70,8 @@ def rerank(draft: str, candidates: list[dict]) -> list[Ranking]:
     return complete(prompt, Rankings).rankings
 
 
-# looks through the relevant studies and determines which ones support, contradict, or are neutral to the PM's draft
+# Third LLM pass that looks through the trimmed list of relevant studies and determines which ones support, 
+# contradict, or are neutral to the PM's draft. A supporting quote and summary are also provided.
 def analyze(draft: str, intent: Intent, study: dict) -> Analysis:
     quotes = "\n".join(f"[{i}] {q['text']}" for i, q in enumerate(study["quotes"]))
     prompt = (
@@ -113,19 +114,25 @@ def _flags(study: dict, stance: str) -> tuple[list[str], bool, int]:
 
 
 def scan(draft: str) -> dict:
+    # If too little words are selected, throw the flag for being too short of an input
     if len(draft.split()) < MIN_DRAFT_WORDS:
         return {"intent": None, "gap": True, "too_short": True, "suggestion": "Try selecting a longer phrase!", "matches": []}
 
+    # Structured object with topics, proposed_feature, and assumptions
     intent = extract_intent(draft)
-
     query = " ".join(intent.topics + [intent.proposed_feature])
     studies = load_studies()
-    candidates = [studies[i] for i in retrieve(query)]
 
-    rankings = [r for r in rerank(draft, candidates) if r.study_id in studies]
+    # Get top K relevant studies 
+    candidates = [studies[relevant_study_id] for relevant_study_id in retrieve(query)]
+
+    # Get reranked list and make sure the study exists as a hallucination safeguard
+    rankings = [ranked_study for ranked_study in rerank(draft, candidates) if ranked_study.study_id in studies]
+    
+    # Trim the reranked list to keep the most relevant studies
     relevant = sorted(
-        (r for r in rankings if r.relevance >= RELEVANCE_THRESHOLD),
-        key=lambda r: r.relevance,
+        (ranked_study for ranked_study in rankings if ranked_study.relevance >= RELEVANCE_THRESHOLD),
+        key=lambda ranked_study: ranked_study.relevance,
         reverse=True,
     )
 
